@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forschungsmethoden C - Sitzung 4: Untersuchungsdimensionen</title>
+    <style>
+        /* --- Root Variables and Basic Styles --- */
+        :root {
+            --uni-hohenheim-blue: #003560;
+            --uni-hohenheim-lightblue: #0073a0;
+            --text-color: #333;
+            --heading-color: var(--uni-hohenheim-blue);
+            --background-color: #f8f9fa;
+            --box-background: #ffffff;
+            --border-color: #dee2e6;
+            --accent-color: #e85f3e; /* Hohenheim Orange/Red accent */
+            --highlight-bg: #fffadd;
+             --highlight-border: #f1c40f;
+            --task-bg: #eef7ff;
+            --task-border: #bce0fd;
+            --pitfall-bg: #fff0f0; /* Light red background for pitfalls */
+            --pitfall-border: #f5c6cb;
+            --pitfall-color: #721c24;
+            --animation-duration-base: 0.6s;
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-family);
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 20px auto;
+            background-color: var(--box-background);
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        /* --- Header Styles --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--uni-hohenheim-blue);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap; /* Allow wrapping on small screens */
+        }
+
+        header .course-info h1 {
+            margin: 0;
+            font-size: 1.8em;
+            color: var(--heading-color);
+        }
+        header .course-info p {
+            margin: 5px 0 0;
+            font-size: 0.95em;
+            color: #555;
+        }
+
+        header .uni-logo img {
+            max-height: 60px;
+            width: auto;
+        }
+
+        /* --- Headings and Text Styles --- */
+        h2, h3 {
+            color: var(--heading-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+         h3 {
+            border-bottom: none;
+            margin-top: 30px;
+            font-size: 1.3em;
+            color: var(--uni-hohenheim-lightblue); /* Make H3 stand out */
+         }
+         h4 {
+            color: var(--uni-hohenheim-blue);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            font-size: 1.15em;
+         }
+
+        p, ul, li {
+            margin-bottom: 1em;
+        }
+        ul { padding-left: 25px; list-style-type: square;}
+        li::marker { color: var(--uni-hohenheim-lightblue); }
+        strong { color: var(--uni-hohenheim-blue); font-weight: 600; }
+        code { background-color: #e9ecef; padding: 0.2em 0.4em; border-radius: 3px; font-family: monospace; }
+
+        blockquote {
+            border-left: 4px solid var(--uni-hohenheim-lightblue);
+            padding-left: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            color: #555;
+            background-color: #f8f9fa;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            border-radius: 0 4px 4px 0;
+        }
+        blockquote footer {
+            font-style: normal;
+            font-size: 0.9em;
+            text-align: right;
+            margin-top: 5px;
+            color: #6c757d;
+        }
+
+        /* --- Box Styles --- */
+        .task-box, .info-box, .group-guidance-box, .pitfall-box {
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 4px;
+            border: 1px solid;
+            border-left-width: 5px;
+        }
+        .task-box {
+            background-color: var(--task-bg);
+            border-color: var(--task-border);
+            border-left-color: var(--uni-hohenheim-blue);
+        }
+        .task-box h2 { margin-top: 0; border-bottom: none; color: var(--uni-hohenheim-blue); }
+
+        .info-box {
+            background-color: var(--highlight-bg);
+            border-color: var(--highlight-border);
+            border-left-color: var(--highlight-border);
+            padding: 15px;
+        }
+        .info-box strong { color: #c89c0c; }
+
+        .group-guidance-box {
+             background-color: #f0f8ff;
+            border-color: #cce5ff;
+            border-left-color: var(--uni-hohenheim-lightblue);
+            margin-top: 20px;
+        }
+         .group-guidance-box h4 {
+            margin-top: 0;
+            border-bottom: 1px dotted var(--uni-hohenheim-lightblue);
+            padding-bottom: 5px;
+            color: var(--uni-hohenheim-lightblue);
+         }
+
+        .pitfall-box {
+            background-color: var(--pitfall-bg);
+            border-color: var(--pitfall-border);
+            border-left-color: var(--accent-color);
+            color: var(--pitfall-color);
+        }
+         .pitfall-box h3 { color: var(--pitfall-color); border-bottom: none; margin-top: 0; }
+         .pitfall-box strong { color: var(--accent-color); }
+
+        /* --- Visual Placeholder Style --- */
+        .visual-placeholder {
+            background-color: var(--background-color);
+            border: 2px dashed var(--border-color);
+            padding: 40px 20px;
+            text-align: center;
+            margin: 25px 0;
+            border-radius: 6px;
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        /* --- Footer Styles --- */
+        footer.page-footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.85em;
+            color: #6c757d;
+        }
+
+        /* --- Base Animation: FadeInUp --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Scroll Trigger Base Style --- */
+        .animated-on-scroll {
+            opacity: 0;
+            transition: opacity var(--animation-duration-base) ease-out;
+        }
+        .animated-on-scroll.is-visible {
+            opacity: 1;
+            animation: fadeInUp var(--animation-duration-base) ease-out forwards;
+        }
+
+        /* --- Checklist Style --- */
+        .checklist { list-style: none; padding-left: 0; }
+        .checklist li { position: relative; padding-left: 30px; margin-bottom: 10px; }
+        .checklist li::before {
+            content: '☐'; /* Unchecked box */
+            position: absolute; left: 0; top: 0;
+            font-size: 1.2em;
+            color: var(--uni-hohenheim-lightblue);
+        }
+        /* Optional: Style for checked items if using JS later:
+        .checklist li.checked::before { content: '☑'; }
+        */
+
+        /* --- Responsive adjustments --- */
+        @media (max-width: 768px) {
+            .container { padding: 20px 15px; }
+            header { flex-direction: column; align-items: flex-start; }
+            header .uni-logo { margin-top: 15px; align-self: center; }
+            h1 { font-size: 1.6em; }
+            h2 { font-size: 1.4em; }
+            h3 { font-size: 1.2em; }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <div class="course-info">
+                <h1>Forschungsmethoden C</h1>
+                <p>Universität Hohenheim | Sommersemester 2025<br>
+                   Andreas Reich | 4. Sitzung: Untersuchungsdimensionen & Definitionen</p>
+            </div>
+            <div class="uni-logo">
+                <img src="logo.png" alt="Logo Universität Hohenheim">
+            </div>
+        </header>
+
+        <main>
+            <section id="introduction" class="animated-on-scroll">
+                <h2>Von der Theorie zur Messung: Untersuchungsdimensionen definieren</h2>
+                <p>Herzlich willkommen zur vierten Sitzung! Nachdem wir uns letzte Woche intensiv mit der Planung eurer Stichproben auseinandergesetzt haben, gehen wir heute den nächsten entscheidenden Schritt im Forschungsprozess: Wir klären, <strong>was genau</strong> wir eigentlich untersuchen wollen.</p>
+                <p>Eure Arbeitsgrundlage sind nun die <strong>Forschungsfragen und Hypothesen, wie sie im Rahmen eurer Stichprobenplanung (Aufgabe 5) finalisiert wurden</strong>. Diese enthalten theoretische Konstrukte (oder Konzepte), die oft noch zu abstrakt sind, um sie direkt messen zu können.</p>
+                 <p>Das heutige Ziel ist es, diese abstrakten Konzepte in greifbare <strong>Untersuchungsdimensionen</strong> herunterzubrechen und diese Dimensionen sowie alle relevanten Begriffe präzise zu <strong>definieren</strong>.</p>
+                 <p><strong>Warum ist das so wichtig?</strong> Dieser Schritt ist die absolut notwendige Vorstufe zur Entwicklung eures konkreten Messinstruments (Fragebogen, Codebuch, experimentelles Design), der sogenannten Operationalisierung (Aufgabe 5). Ohne klar definierte Dimensionen wisst ihr nicht, <em>was</em> ihr messen müsst, und ohne präzise Definitionen wisst ihr nicht, <em>wie</em> ihr es messen sollt. Dieser Schritt sichert also die <strong>Validität</strong> eurer Messung – messt ihr wirklich das, was ihr messen wollt?</p>
+            </section>
+
+             <section id="task-definition" class="animated-on-scroll">
+                <div class="task-box">
+                    <h2>Aufgabe 6: Dokumentation der geplanten Untersuchungsdimensionen</h2>
+                    <p>Basierend auf eurer finalisierten Forschungsfrage und Hypothesen sollt ihr nun die Untersuchungsdimensionen für eure spezifische Studie schriftlich ausarbeiten.</p>
+                     <p><strong>Wichtige Prüfung vorab:</strong> Passt eure Forschungsfrage zu euren Hypothesen? Und passen eure Hypothesen zu eurer gewählten Methode (Befragung, Experiment, Inhaltsanalyse)? Falls hier Unklarheiten bestehen, sprecht mich bitte an!</p>
+
+                    <h3>Konkrete Schritte für diese Woche:</h3>
+                    <ol>
+                        <li><strong>Listet alle Konzepte auf:</strong> Welche zentralen Begriffe kommen in eurer Forschungsfrage und euren Hypothesen vor? (Unabhängige Variablen, Abhängige Variablen, ggf. Moderatoren/Mediatoren).</li>
+                        <li><strong>Denkt über Drittvariablen nach:</strong> Welche weiteren Faktoren könnten einen Einfluss haben, auch wenn sie nicht explizit in den Hypothesen stehen? (z.B. soziodemografische Merkmale, Voreinstellungen). Diese müssen später ggf. als Kontrollvariablen miterhoben werden.</li>
+                         <li><strong>Identifiziert übergreifende Begriffe:</strong> Gibt es Begriffe, die für alle Hypothesen relevant sind, aber nicht in jeder einzeln genannt werden (z.B. "Rezipient", "KI-generierter Inhalt")?</li>
+                        <li><strong>Definiert alle zentralen Begriffe:</strong> Was genau meint ihr mit jedem Konzept? Seid präzise und greift ggf. auf wissenschaftliche Definitionen zurück.</li>
+                        <li><strong>Welche Dimensionen haben die Konzepte?</strong> Zerlegt eure (mehrdimensionalen) Konzepte in ihre relevanten Teilaspekte (Dimensionen). Begründet, warum diese Dimensionen für eure Studie wichtig sind. Definiert auch diese Dimensionen.</li>
+                        <li><strong>Wie stehen die Konzepte/Dimensionen in Beziehung?</strong> Skizziert kurz den erwarteten Zusammenhang (basierend auf euren Hypothesen).</li>
+                    </ol>
+
+                    <h3>Checkliste zur Dimensionsanalyse:</h3>
+                    <ul class="checklist">
+                        <li>[ ] Alle Konzepte aus RQ/Hypothesen identifiziert?</li>
+                        <li>[ ] Mögliche Drittvariablen bedacht?</li>
+                        <li>[ ] Jedes Konzept auf Mehrdimensionalität geprüft?</li>
+                        <li>[ ] Relevante Dimensionen ausgewählt und begründet?</li>
+                        <li>[ ] Für jedes Konzept und jede Dimension eine präzise Definition formuliert?</li>
+                        <li>[ ] Beziehung der Konzepte (laut Hypothesen) klar?</li>
+                    </ul>
+
+                     <p><strong>WICHTIG:</strong> Es geht diese Woche <strong>NOCH NICHT</strong> darum, die konkreten Fragen, Antwortskalen, Codekategorien oder experimentellen Manipulationen (Indikatoren) zu formulieren. Das ist der nächste Schritt (Aufgabe 5: Operationalisierung / Erstellung des Untersuchungsinstruments).</p>
+                     <h3>Abgabe:</h3>
+                    <p>Erstellt eine <strong>Text-Dokumentation</strong> (ca. 3-4 Seiten, wissenschaftlicher Stil) und eine <strong>Präsentation</strong>, die eure Untersuchungsdimensionen und Definitionen detailliert darstellt.</p>
+                     <ul>
+                         <li><strong>Frist Dokumentation:</strong> Montagabend, 20:00 Uhr (Upload auf ILIAS).</li>
+                         <li><strong>Frist Präsentation:</strong> Bereitet wie immer eine Präsentation eurer Dimensionen/Definitionen vor (Folien ebenfalls bis spätestens Mittwoch hochladen).</li>
+                     </ul>
+                 </div>
+            </section>
+
+            <section id="theory" class="animated-on-scroll">
+                <h2>Theoretischer Hintergrund: Das Korrespondenzproblem</h2>
+                <p>Zwischen der abstrakten theoretischen Ebene (eure Konzepte und Hypothesen) und der konkreten empirischen Ebene (das, was ihr messt) besteht oft eine Lücke – das sogenannte <strong>Korrespondenzproblem</strong>.</p>
+                <blockquote>
+                    "Die meisten theoretischen Begriffe (= Konzepte) sind zu allgemein und damit zu unklar, als dass hieraus direkt Messanweisungen gegeben werden könnten."
+                </blockquote>
+                <p>Um diese Lücke zu schließen, nutzen wir die <strong>dimensionale Analyse</strong>:</p>
+                <ul>
+                    <li>Wir identifizieren die <strong>zentralen Konzepte</strong> unserer Studie.</li>
+                    <li>Wir zerlegen komplexe Konzepte in ihre relevanten <strong>Teilbereiche oder Aspekte</strong> – die Untersuchungsdimensionen. Nicht jedes Konzept ist mehrdimensional (z.B. Alter), aber viele zentrale Konstrukte (wie Einstellung, Nutzung, Reputation) sind es.</li>
+                     <li>Wir klären durch <strong>Konzeptspezifikation</strong> genau, was mit jedem Konzept und jeder seiner Dimensionen gemeint ist. Hierbei können auch kurze Beispiele für Dimensionalisierung helfen:
+                        <ul>
+                            <li>"Politische Partizipation" könnte Dimensionen wie Wahlbeteiligung, Teilnahme an Demonstrationen, Online-Aktivismus, Parteimitgliedschaft umfassen.</li>
+                            <li>"Glaubwürdigkeit einer Nachrichtenquelle" könnte Dimensionen wie wahrgenommene Expertise, Vertrauenswürdigkeit und Sachlichkeit beinhalten.</li>
+                        </ul>
+                     </li>
+                    <li>Wir erstellen präzise, wissenschaftlich fundierte <strong>Definitionen</strong> für alle Begriffe und Dimensionen.</li>
+                </ul>
+
+                 <!-- Platzhalter 1: Grafik Korrespondenzproblem -->
+                 <div class="visual-placeholder animated-on-scroll" id="placeholder-korrespondenzproblem">
+                    Platzhalter 1: Statische Grafik, die die Theorie-Seite (Theoretische Fundierung, Definition zentraler Begriffe, Hypothesenbildung) der Methoden-Seite (Festlegung GG/Stichprobe, Wahl Untersuchungsanlage, Wahl Methode(n), Entwicklung & Test Untersuchungsinstrument) gegenüberstellt. Ein markanter Pfeil oder Blitz mit der Beschriftung "Korrespondenzproblem" zeigt die Lücke bzw. die notwendige Verbindung zwischen der Hypothesenbildung und der Methodenwahl/Instrumententwicklung.
+                 </div>
+            </section>
+
+             <section id="example" class="animated-on-scroll">
+                 <h2>Beispiel-Walkthrough: Von der Forschungsfrage zu den Dimensionen</h2>
+                 <p>Verdeutlichen wir den Prozess am Beispiel "Social Media & Wohlbefinden":</p>
+                 <p><strong>Forschungsfrage:</strong> Welchen Einfluss hat die <em>Intensität der Social-Media-Nutzung</em> auf das <em>subjektive Wohlbefinden</em> von jungen Erwachsenen?</p>
+
+                  <!-- Platzhalter 2: Grafik FQ -> Hypothese (Interaktiv) -->
+                  <div class="visual-placeholder animated-on-scroll" id="placeholder-fq-hypothese">
+                       Platzhalter 2: Interaktive Grafik (SVG mit JS).
+                       Schritt 1: Zeigt Box "Forschungsfrage (SM & Wohlbefinden)".
+                       Schritt 2 (nach Klick/Trigger): Blendet Box "Theorie (z.B. Social Comparison)" ein.
+                       Schritt 3 (nach Klick/Trigger): Blendet Box "Konzeptspezifikation (Was heißt 'Intensität'? Was heißt 'Wohlbefinden'?)" ein.
+                       Schritt 4 (nach Klick/Trigger): Blendet Box "Spezifische Hypothese (SM-Nutzungsdauer -> Lebenszufriedenheit)" ein. Pfeile verdeutlichen den Prozessfluss.
+                   </div>
+
+                 <p><strong>Beispiel-Hypothese:</strong> Je höher die <em>Intensität der Social-Media-Nutzung (X)</em>, desto geringer ist das <em>subjektive Wohlbefinden (Y)</em>.</p>
+
+                 <h4>1. Konzepte identifizieren:</h4>
+                 <ul>
+                     <li>Unabhängige Variable (uV / X): <code>Intensität der Social-Media-Nutzung</code></li>
+                     <li>Abhängige Variable (aV / Y): <code>Subjektives Wohlbefinden</code></li>
+                     <li>Zielgruppe: <code>Junge Erwachsene</code></li>
+                     <li>Mögliche Drittvariablen: Persönlichkeit, Soziales Umfeld, Alter, Geschlecht...</li>
+                 </ul>
+
+                 <h4>2. Dimensionale Analyse & Konzeptspezifikation:</h4>
+                 <p>Wir zerlegen die Hauptkonzepte in relevante Dimensionen:</p>
+                 <ul>
+                     <li><strong>Konzept: <code>Intensität der Social-Media-Nutzung</code></strong>
+                         <ul>
+                             <li>Dimension 1: <code>Nutzungshäufigkeit</code> (Wie oft?)</li>
+                             <li>Dimension 2: <code>Nutzungsdauer</code> (Wie lange?)</li>
+                             <li>Dimension 3: <code>Nutzungsvielfalt (Plattformen)</code> (Wie viele?)</li>
+                             <li>Dimension 4: <code>Nutzungsart</code> (Aktiv vs. Passiv?)</li>
+                             <li>Dimension 5: <code>Nutzungsinhalte</code> (Was wird genutzt?)</li>
+                         </ul>
+                         <em>Entscheidung: Für die Hypothese könnten Dimension 1 (Häufigkeit) und 2 (Dauer) am relevantesten sein. Dimension 4 (Art) könnte ein wichtiger Moderator sein.</em>
+                     </li>
+                      <li><strong>Konzept: <code>Subjektives Wohlbefinden</code></strong>
+                         <ul>
+                             <li>Dimension 1: <code>Kognitives Wohlbefinden</code> (Lebenszufriedenheit)</li>
+                             <li>Dimension 2: <code>Affektives Wohlbefinden (positiv)</code> (Positive Emotionen)</li>
+                             <li>Dimension 3: <code>Affektives Wohlbefinden (negativ)</code> (Negative Emotionen)</li>
+                         </ul>
+                         <em>Entscheidung: Die Hypothese zielt auf das allgemeine Wohlbefinden, daher könnten Dimension 1 und 3 besonders relevant sein.</em>
+                     </li>
+                 </ul>
+
+                 <h4>3. Definitionen:</h4>
+                 <p>Beispiele für präzise Definitionen:</p>
+                 <ul>
+                    <li><code>Nutzungsdauer:</code> "Die durchschnittliche Anzahl an Stunden, die eine Person laut Selbstauskunft an einem typischen Wochentag aktiv auf Social-Media-Plattformen (definiert als Instagram, TikTok, Facebook, X) verbringt."</li>
+                    <li><code>Lebenszufriedenheit (Dimension des Subj. Wohlbefindens):</code> "Die globale kognitive Bewertung des eigenen Lebens als Ganzes, basierend auf den eigenen Kriterien der Person." (angelehnt an Diener et al.)</li>
+                 </ul>
+
+                 <!-- Platzhalter 3: Grafik Hypothese -> Dimensionen -> Indikatoren (Interaktiv) -->
+                 <div class="visual-placeholder animated-on-scroll" id="placeholder-hypothese-dimensionen">
+                     Platzhalter 3: Interaktive Grafik (SVG mit JS), die die Hierarchie zeigt.
+                     Oben: Box "Hypothese (SM-Dauer -> Lebenszufriedenheit)".
+                     Mitte Links: Box "Konzept X: SM-Nutzungsdauer". Mitte Rechts: Box "Konzept Y: Lebenszufriedenheit".
+                     Unten Links (unter X): Box "**Dimension X1: Dauer (Std./Tag)**" <-- Visuell hervorheben!
+                     Unten Rechts (unter Y): Box "**Dimension Y1: Globale kognitive Bewertung**" <-- Visuell hervorheben!
+                     Darunter (Ausblick, leicht ausgegraut): Boxen für Indikatoren (z.B. "Frage x1", "SWLS Items y1-y5").
+                     Ganz unten (Ausblick, leicht ausgegraut): Box für Index (z.B. "Mittelwert SWLS"). Pfeile zeigen die Ableitung.
+                 </div>
+             </section>
+
+            <section id="common-pitfalls" class="animated-on-scroll">
+                 <div class="pitfall-box">
+                     <h3>Worauf besonders achten? (Häufige Stolpersteine)</h3>
+                     <ul>
+                         <li><strong>Dimension vs. Indikator nicht verwechseln:</strong> Diese Woche geht es um die *Aspekte* eures Konzepts (Dimensionen), noch nicht um die *konkreten Messinstrumente* (Indikatoren: Fragen, Codekategorien, Messwerte). Fragt euch: "Welchen Teilaspekt meines Konzepts will ich erfassen?" (Dimension) und *nicht* "Wie frage ich das ab?" (Indikator).</li>
+                         <li><strong>Vage Definitionen vermeiden:</strong> Eine Definition wie "Glaubwürdigkeit ist, wie glaubwürdig etwas ist" hilft nicht. Nutzt Fachliteratur oder formuliert präzise, was *ihr* unter dem Begriff versteht. Beispiel: Vage: "Authentizität". Präziser: "Authentizität eines Social-Media-Posts bezieht sich auf die Wahrnehmung des Rezipienten, inwieweit der Post als echt, aufrichtig und nicht-manipulativ in seiner Darstellung erscheint."</li>
+                         <li><strong>Relevanz sicherstellen:</strong> Überlegt bei jeder Dimension: Brauchen wir diese wirklich, um unsere Hypothesen zu testen oder unsere Forschungsfrage zu beantworten? Weniger, aber dafür relevante und gut definierte Dimensionen sind besser als viele unklare.</li>
+                         <li><strong>Dritt-/Kontrollvariablen nicht vergessen:</strong> Denkt frühzeitig daran, welche anderen Faktoren eure Ergebnisse beeinflussen könnten. Auch diese müssen klar definiert werden, um sie später adäquat miterheben zu können (z.B. "Vorerfahrung mit KI", "Politische Einstellung").</li>
+                         <li><strong>Eindimensionale Konzepte:</strong> Nicht jedes Konzept muss zerlegt werden. Alter ist z.B. meist eindimensional (Anzahl der Lebensjahre). Erkennt, wann ein Konzept klar genug ist und wann es einer weiteren Aufschlüsselung bedarf.</li>
+                     </ul>
+                 </div>
+            </section>
+
+            <section id="method-specifics" class="animated-on-scroll">
+                <h2>Konkreter Output für die Aufgabe 6 (pro Methode)</h2>
+                 <ul>
+                    <li><strong>Befragung:</strong> Dokumentiert und definiert alle Dimensionen, die ihr später im Fragebogen erfassen wollt (sowohl für UVs/AVs als auch für Kontrollvariablen).</li>
+                    <li><strong>Inhaltsanalyse:</strong> Dokumentiert und definiert alle Dimensionen, die später die Grundlage für euer Kategoriensystem bilden (also die geplanten Haupt- und Unterkategorien).</li>
+                     <li><strong>Experiment:</strong> Dokumentiert und definiert alle Dimensionen, die ihr im begleitenden Fragebogen erfasst (AVs, Kontrollvariablen). Zusätzlich: Definiert präzise die manipulierten Dimensionen (UVs) in Bezug darauf, wie sie im Stimulus umgesetzt werden sollen.</li>
+                 </ul>
+             </section>
+
+             <section id="group-guidance" class="animated-on-scroll">
+                 <h2>Spezifische Hinweise für eure Arbeitsgruppen</h2>
+                 <p>Nutzt die folgenden Punkte als Leitfaden, um die Konzepte und Dimensionen eurer jeweiligen Studie zu definieren. Orientiert euch dabei an euren Hypothesen aus der Stichprobenplanung.</p>
+
+                 <div class="group-guidance-box">
+                     <h4>Gruppe C: Befragung (Einfluss KI auf Arbeitszufriedenheit/-sicherheit)</h4>
+                     <p>Eure Forschungsfrage lautet: „Wie beeinflusst der Einsatz von Künstlicher Intelligenz die Arbeitszufriedenheit und Arbeitsplatzsicherheit in unterschiedlichen Berufsgruppen?“</p>
+                     <p>Eure Hypothesen (Stand Stichprobenplan):</p>
+                     <ul>
+                         <li>H1: Trotz des Einsatzes von KI steigt die wahrgenommene Arbeitsplatzsicherheit in sozialen Berufen.</li>
+                         <li>H2: Es gibt signifikante Unterschiede in der Arbeitszufriedenheit zwischen den vier Berufsgruppen (Pflege, IT, Verwaltung, Bildung) in Bezug auf den KI-Einsatz.</li>
+                         <li>H3: Je geringer ein Berufsfeld von KI beeinträchtigt ist, desto positiver ist die Einstellung gegenüber von KI bei den Arbeitnehmern.</li>
+                     </ul>
+                     <ul>
+                         <li><strong>Zu klärende Konzepte & Dimensionen:</strong>
+                            <ul>
+                                <li><code>KI-Einsatz</code>: Wie definiert ihr das? Dimensionen könnten sein: Art der KI (Automatisierung, Assistenz?), Häufigkeit der Begegnung/Nutzung, Notwendigkeit der Nutzung für die Arbeit, Subjektives Gefühl der Kontrolle über die KI vs. Kontrolliertwerden. *Wie stellt ihr Vergleichbarkeit über die 4 Berufsgruppen (G1-G4 aus Stichprobenplan) sicher?*</li>
+                                <li><code>Wahrgenommene Arbeitsplatzsicherheit</code> (aV H1): Welche Dimensionen? Angst vor Jobverlust? Angst vor Bedeutungsverlust der eigenen Fähigkeiten (Dequalifizierung)? Gefühl der Ersetzbarkeit?</li>
+                                <li><code>Soziale Berufe</code> (Gruppe für H1): Wie grenzt ihr diese Gruppe genau ab (Teilmenge von G2?)? Welche Berufe gehören dazu?</li>
+                                <li><code>Arbeitszufriedenheit</code> (aV H2): Globale Zufriedenheit? Oder spezifische Dimensionen wie Zufriedenheit mit Aufgaben, mit Autonomie, mit Lernchancen durch KI, mit Entlastung durch KI?</li>
+                                <li><code>Berufsgruppe</code> (Vergleichsvariable H2): Die Definition der 4 Gruppen G1-G4 habt ihr bereits gut angelegt.</li>
+                                <li><code>Beeinträchtigung durch KI</code> (uV? H3): Wie definiert ihr "Beeinträchtigung"? Ist es der Grad der wahrgenommenen Veränderung von Arbeitsabläufen? Die wahrgenommene Notwendigkeit, neue Skills zu lernen?</li>
+                                <li><code>Einstellung zu KI</code> (aV? H3): Welche Dimensionen? Kognitiv (Nutzen-/Risikobewertung), Affektiv (Angst/Hoffnung), Verhaltensbezogen (Nutzungsbereitschaft)? Was bedeutet "positiv"?</li>
+                                <li><code>Drittvariablen</code>: Definiert Alter, Geschlecht, Bildung, Berufserfahrung etc. klar. Was ist mit dem Kommunikationsklima im Unternehmen bzgl. KI?</li>
+                            </ul>
+                         </li>
+                          <li><strong>Kommunikationswissenschaftlicher Bezug:</strong> Könnte die Art, wie über KI im Unternehmen oder in Branchenmedien kommuniziert wird (<code>Organisationskommunikation</code>, <code>Medienberichterstattung</code>), die Einstellung (H3) oder Zufriedenheit (H2) beeinflussen? Definiert diese potenziellen Einflussfaktoren ggf. als Kontrollvariablen.</li>
+                          <li><strong>Beispiel aus anderer Studie:</strong> Denkt daran, wie die Studie zu parasozialen Beziehungen "Intensität" in Dimensionen zerlegt hat – wendet dies auf eure Konstrukte an.</li>
+                     </ul>
+                 </div>
+
+                 <div class="group-guidance-box">
+                     <h4>Gruppe C: Experiment (Wirkung KI-Labeling auf Tagesschau-Reputation)</h4>
+                      <p>Eure Forschungsfrage lautet: „Wie wirken sich KI-gekennzeichnete Instagram-Beiträge der Tagesschau auf die öffentliche Wahrnehmung und Reputation aus?“</p>
+                     <p>Eure Hypothesen (Stand Stichprobenplan):</p>
+                     <ul>
+                         <li>H1: Instagram-Beiträge der Tagesschau, die als KI-generiert gekennzeichnet sind, werden von Rezipient:innen als weniger glaubwürdig wahrgenommen als nicht gekennzeichnete Beiträge.</li>
+                         <li>H2: KI-gekennzeichnete Instagram-Beiträge werden als weniger authentisch wahrgenommen als nicht gekennzeichnete Beiträge.</li>
+                         <li>H3: Die Rezeption KI-gekennzeichneter Beiträge führt zu einer geringeren Bewertung der Reputation der Tagesschau im Vergleich zu nicht gekennzeichneten Beiträgen.</li>
+                     </ul>
+                      <ul>
+                         <li><strong>Zu klärende Konzepte & Dimensionen:</strong>
+                            <ul>
+                                 <li><code>Kennzeichnung als KI-generiert</code> (UV): Wie genau definiert ihr diese Manipulation? Was ist der Text/das Symbol des Labels? Wo wird es platziert? Die Definition muss die exakte Umsetzung im Stimulus beschreiben.</li>
+                                 <li><code>Instagram-Beitrag der Tagesschau</code> (Stimulus): Wie definiert ihr einen typischen Beitrag? Welches Thema/welche Themen wählt ihr (z.B. Politik, Wissenschaft etc.)? Wie stellt ihr sicher, dass sich die Beiträge in den beiden Gruppen (Label vs. kein Label) nur durch das Label unterscheiden? Die Definition muss Inhalt, Layout und Gestaltung umfassen.</li>
+                                  <li><code>Glaubwürdigkeit</code> (aV H1): Definiert, ob sich dies auf den Beitrag selbst oder die Tagesschau als Quelle bezieht. Mögliche Dimensionen: Expertise, Vertrauenswürdigkeit, Sachlichkeit.</li>
+                                 <li><code>Authentizität</code> (aV H2): Was bedeutet "authentisch" hier? Wahrgenommene Echtheit, Aufrichtigkeit, Nicht-Manipuliertheit? Wie grenzt ihr es *präzise* von Glaubwürdigkeit/Vertrauenswürdigkeit ab? (Bezieht euch auf eure Definitionen aus dem Forschungsprozessmodell).</li>
+                                 <li><code>Reputation der Tagesschau</code> (aV H3): Definiert dies als globales Image oder über Dimensionen wie journalistische Qualität, Vertrauen, Objektivität, gesellschaftliche Relevanz.</li>
+                                 <li><code>Rezipient:innen</code>: Definiert eure Zielgruppe klar (siehe operationale GG im Stichprobenplan).</li>
+                                  <li><code>Drittvariablen</code>: Definiert klar, wie ihr Voreinstellung zur Tagesschau, Voreinstellung zu KI, Social Media Nutzung und Demografie erfassen wollt.</li>
+                            </ul>
+                          </li>
+                     </ul>
+                 </div>
+
+                 <div class="group-guidance-box">
+                     <h4>Gruppe C: Inhaltsanalyse (Darstellung von Politikern in KI-Videos)</h4>
+                      <p>Eure Forschungsfrage lautet: „Wie werden politische Rollenbilder in KI-generierten Videos über Politiker inszeniert, insbesondere im Hinblick auf die Reproduktion oder Brechung von etablierten Klischees, traditionellen Kontexten und realen politischen Beziehungen?“</p>
+                     <p>Eure Hypothesen (Stand Stichprobenplan):</p>
+                     <ul>
+                         <li>H1: Der prozentuale Anteil der Videodauer in denen Politiker in nicht-politischen Kontexten dargestellt werden, ist höher als der prozentuale Anteil, in denen sie in traditionellen politischen Handlungskontexten dargestellt werden.</li>
+                         <li>H2: KI-generierte Videos, die Politikerinnen und Politiker zeigen, deren reale politische Beziehung als Gegner/distanzierte Parteien kategorisiert wurde, stellen diese häufiger in unerwartet nahen/freundschaftlichen Interaktionen dar als Politikerinnen und Politiker mit realen Verbündeten.</li>
+                     </ul>
+                     <ul>
+                          <li><strong>Zentrale Konzepte (Basis für Codebuch!):</strong> <code>Dargestellter Politiker</code> (Liste der 6), <code>Politischer Kontext</code>, <code>Nicht-politischer Kontext</code>, <code>Videodauer in Kontext</code>, <code>Reale politische Beziehung</code>, <code>Dargestellte Interaktion</code>, <code>KI-Generierung</code> (Identifikationsmerkmal), <code>TikTok-Video</code> (Analyseeinheit).</li>
+                         <li><strong>Weitere relevante Konzepte/Kategorien:</strong> Art der KI-Nutzung, Thema, Satire-Elemente (falls noch relevant), Viralitätsmaße.</li>
+                         <li><strong>Dimensionen & Definitionen (Hauptarbeit für Codebuch!):</strong>
+                            <ul>
+                                 <li><strong><code>Politischer</code> vs. <code>Nicht-politischer Kontext</code> (für H1):</strong> Erstellt eine Liste mit klaren, sich gegenseitig ausschließenden Kriterien und Beispielen für beide Kontextarten (z.B. Ort, Handlung, Kleidung, Thema). Was ist mit Mischformen?</li>
+                                  <li><strong><code>Videodauer in Kontext</code> (für H1):</strong> Wie wird das gemessen? Zeitstoppung pro Szene? Welche Einheit (Sekunden)? Wie wird der prozentuale Anteil berechnet?</li>
+                                  <li><strong><code>Reale politische Beziehung</code> (für H2):</strong> Erstellt die Klassifikation (Gegner/distanziert vs. Verbündete) für alle Paare der 6 Politiker. Begründet die Einordnung (z.B. Parteizugehörigkeit, bekannte Konflikte/Kooperationen zum Zeitpunkt X).</li>
+                                  <li><strong><code>Dargestellte Interaktion</code> (für H2):</strong> Definiert *exakt* und mit *beobachtbaren Indikatoren*, was als "unerwartet nah/freundschaftlich" gilt (z.B. Lächeln UND körperliche Berührung; gemeinsames Singen/Tanzen; positive verbale Aussage übereinander). Was gilt als "nicht unerwartet/distanziert"? Wie wird die "Unerwartetheit" operationalisiert (Abgleich mit realer Beziehung)? Dies braucht extrem klare Codierregeln!</li>
+                                  <li><strong><code>KI-Generierung</code>:</strong> Definiert die Kriterien (visuell, auditiv, expliziter Hinweis), anhand derer ein Video als KI-generiert eingestuft wird. Was passiert bei Unsicherheit?</li>
+                            </ul>
+                         </li>
+                     </ul>
+                 </div>
+
+            </section>
+
+            <section id="conclusion" class="animated-on-scroll">
+                <h2>Zusammenfassung und Ausblick</h2>
+                <p>Die sorgfältige Definition eurer Untersuchungsdimensionen ist ein kritischer Meilenstein. Sie zwingt euch, eure theoretischen Konzepte zu präzisieren und schafft die unverzichtbare Grundlage für die Entwicklung eurer Messinstrumente in der nächsten Woche.</p>
+                <h4>Key Takeaways:</h4>
+                <ul>
+                    <li>Die dimensionale Analyse schließt die Lücke zwischen Theorie und Empirie (Korrespondenzproblem).</li>
+                    <li>Zerlegt eure zentralen Konzepte in relevante, klar definierte Dimensionen.</li>
+                    <li>Formuliert präzise Definitionen für alle Begriffe und Dimensionen.</li>
+                    <li>Denkt auch an Kontroll-/Drittvariablen.</li>
+                    <li>Dieser Schritt ist die Vorbereitung für die Operationalisierung (Aufgabe 5).</li>
+                </ul>
+                <p>Nächste Woche geht es dann an die konkrete Umsetzung: Wie formulieren wir Fragen? Wie bauen wir Skalen? Wie entwickeln wir ein Codebuch? Wie gestalten wir den experimentellen Stimulus?</p>
+            </section>
+
+        </main>
+
+        <footer class="page-footer">
+            <p>© Andreas Reich, Universität Hohenheim, Sommersemester 2025</p>
+        </footer>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Intersection Observer Setup ---
+            const animatedElements = document.querySelectorAll('.animated-on-scroll');
+
+            const observerOptions = {
+                root: null, // relative to viewport
+                rootMargin: '0px',
+                threshold: 0.1 // Trigger when 10% of the element is visible
+            };
+
+            const observerCallback = (entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target); // Animate only once
+                    }
+                });
+            };
+
+            const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+            animatedElements.forEach(el => {
+                 observer.observe(el);
+            });
+        });
+    </script>
+
+</body>
+</html>
