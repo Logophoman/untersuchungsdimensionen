@@ -446,7 +446,7 @@
                     Stichproben auseinandergesetzt haben, gehen wir heute den nächsten entscheidenden Schritt im
                     Forschungsprozess: Wir klären, <strong>was genau</strong> wir eigentlich untersuchen wollen.</p>
                 <p>Eure Arbeitsgrundlage sind nun die <strong>Forschungsfragen und Hypothesen, wie sie im Rahmen eurer
-                        Stichprobenplanung (Aufgabe 5) finalisiert wurden</strong>. Diese enthalten theoretische
+                        Stichprobenplanung (Aufgabe 3) finalisiert wurden</strong>. Diese enthalten theoretische
                     Konstrukte (oder Konzepte), die oft noch zu abstrakt sind, um sie direkt messen zu können. Das
                     heutige Ziel ist es, diese abstrakten Konzepte in greifbare
                     <strong>Untersuchungsdimensionen</strong> herunterzubrechen und diese Dimensionen sowie alle
@@ -463,7 +463,7 @@
 
             <section id="task-definition" class="animated-on-scroll">
                 <div class="task-box">
-                    <h2>Aufgabe 6: Dokumentation der geplanten Untersuchungsdimensionen</h2>
+                    <h2>Aufgabe 4: Dokumentation der geplanten Untersuchungsdimensionen</h2>
                     <p>Basierend auf eurer finalisierten Forschungsfrage und Hypothesen sollt ihr nun die
                         Untersuchungsdimensionen für eure spezifische Studie schriftlich ausarbeiten.</p>
                     <p><strong>Wichtige Prüfung vorab:</strong> Passt eure Forschungsfrage zu euren Hypothesen? Und
@@ -521,7 +521,7 @@
                         detailliert darstellt.</p>
                     <ul>
                         <li><strong>Frist Dokumentation:</strong> Montagabend, 20:00 Uhr (Upload auf ILIAS).</li>
-                        <li><strong>Frist Präsentation:</strong> Bereitet wie immer eine Präsentation eurer
+                        <li><strong>Präsentation:</strong> Bereitet wie immer eine Präsentation eurer
                             Dimensionen/Definitionen vor (Folien ebenfalls bis spätestens Mittwoch hochladen).</li>
                     </ul>
                 </div>
@@ -726,7 +726,7 @@
                             <rect class="fq-svg-box" x="100" y="110" width="300" height="50" />
                             <text class="fq-svg-text" x="250" y="135">
                                 <tspan x="250" dy="-0.6em">Theorie (z.B.):</tspan>
-                                <tspan x="250" dy="1.2em">Social Comparison -> Neg. Effekte</tspan>
+                                <tspan x="250" dy="1.2em">Sozialer Vergleich -> Neg. Effekte</tspan>
                             </text>
                             <rect id="trigger-step2" class="interactive-trigger" x="230" y="170" width="40" height="20"
                                 rx="5" visibility="hidden" />
@@ -867,15 +867,15 @@
                         (angelehnt an Diener et al.)</li>
                 </ul>
 
-                <!-- Start Platzhalter 3: Interaktive Grafik Hypothese -> Dimensionen -> Indikatoren -->
+                <!-- Start Platzhalter 3: Interaktive Grafik Hypothese -> Dimensionen -> Indikatoren MIT EBENEN (Angepasster Abstand) -->
                 <div class="visual-placeholder animated-on-scroll" id="placeholder-hypothese-dimensionen">
-                    <svg id="hierarchy-svg" viewBox="0 0 700 580" xmlns="http://www.w3.org/2000/svg"
+                    <svg id="hierarchy-svg" viewBox="-40 0 740 580" xmlns="http://www.w3.org/2000/svg"
                         style="max-width: 700px; font-family: var(--font-family); display: block; margin: auto;">
                         <style>
                             #hierarchy-svg .box {
                                 fill: var(--svg-box-fill);
-                                stroke: var(--uni-hohenheim-lightblue);
-                                stroke-width: 1.5;
+                                stroke: #cccccc; /* Lighter stroke for boxes */
+                                stroke-width: 1;
                                 rx: 5;
                                 ry: 5;
                             }
@@ -886,7 +886,6 @@
                                 text-anchor: middle;
                                 dominant-baseline: central;
                                 pointer-events: none;
-                                /* Allow clicks to pass through text to box if needed */
                             }
 
                             #hierarchy-svg .box-text tspan.line2 {
@@ -895,30 +894,25 @@
 
                             #hierarchy-svg .dimension-box {
                                 stroke: var(--accent-color);
-                                /* Highlight border */
-                                stroke-width: 2.5;
+                                stroke-width: 2.0;
                                 fill: #fffcf5;
-                                /* Slightly different background for emphasis */
                             }
 
                             #hierarchy-svg .dimension-text {
                                 font-weight: bold;
-                                /* Highlight text */
                                 fill: var(--uni-hohenheim-blue);
                             }
 
                             #hierarchy-svg .preview-box {
-                                opacity: 0.6;
-                                stroke: var(--svg-box-stroke);
+                                opacity: 0.8;
+                                stroke: #dddddd;
                                 stroke-width: 1;
                                 fill: #f8f9fa;
-                                /* Slightly grayed background */
                             }
 
                             #hierarchy-svg .preview-text {
-                                opacity: 0.7;
+                                opacity: 0.8;
                                 fill: #555;
-                                /* Grayed text */
                             }
 
                             #hierarchy-svg .arrow {
@@ -940,6 +934,21 @@
                                 marker-end: url(#arrowhead-focus);
                                 stroke-dasharray: 4, 2;
                             }
+
+                            /* Styles for Level Structure */
+                            #hierarchy-svg .level-label {
+                                font-size: 10px;
+                                font-weight: bold;
+                                fill: var(--uni-hohenheim-blue);
+                                text-anchor: start; /* Align to the left */
+                                dominant-baseline: central;
+                            }
+
+                            #hierarchy-svg .level-divider {
+                                stroke: var(--uni-hohenheim-lightblue);
+                                stroke-width: 1.5;
+                                stroke-dasharray: 6, 3;
+                            }
                         </style>
                         <defs>
                             <marker id="arrowhead-hierarchy" markerWidth="8" markerHeight="6" refX="8" refY="3"
@@ -952,7 +961,29 @@
                             </marker>
                         </defs>
 
-                        <!-- Level 1: Hypothese -->
+                        {/* Level Structure (Labels and Dividers) */}
+                        <g id="level-structure">
+                            {/* Labels: Moved further left into the new viewBox space (x="-30") */}
+                            <text class="level-label" x="-30" y="35">Theorie</text>
+                            <text class="level-label" x="-30" y="125">Konzeptspezifikation</text>
+                            <text class="level-label" x="-30" y="225">Dimensionen</text>
+                            <text class="level-label" x="-30" y="335">Operationalisierung (1)</text>
+                            <text class="level-label" x="-30" y="435">
+                                 <tspan x="-30" dy="-0.7em">Operationalisierung (2)</tspan>
+                                 <tspan x="-30" dy="1.4em">ggf. Indexbildung</tspan>
+                            </text>
+
+                            {/* Dividers: Adjusted start point (x1="-40") to match new viewBox edge */}
+                            <line class="level-divider" x1="-40" y1="80" x2="700" y2="80" />
+                            <line class="level-divider" x1="-40" y1="175" x2="700" y2="175" />
+                            <line class="level-divider" x1="-40" y1="275" x2="700" y2="275" />
+                            <line class="level-divider" x1="-40" y1="390" x2="700" y2="390" />
+                            {/* Optional: Line below last level */}
+                            {/* <line class="level-divider" x1="-40" y1="480" x2="700" y2="480" /> */}
+                        </g>
+
+
+                        {/* Level 1: Hypothese - Positions remain relative to original content area */}
                         <g id="level-hypothese">
                             <rect id="box-hypo" class="box" x="200" y="10" width="300" height="50" />
                             <text id="text-hypo" class="box-text" x="350" y="35">
@@ -961,12 +992,12 @@
                             </text>
                         </g>
 
-                        <!-- Level 2: Konzepte -->
+                        {/* Level 2: Konzepte */}
                         <g id="level-konzepte">
-                            <rect id="box-konzept-x" class="box" x="50" y="100" width="250" height="50" />
-                            <text id="text-konzept-x" class="box-text" x="175" y="125">
-                                <tspan x="175" dy="-0.6em">Konzept X:</tspan>
-                                <tspan class="line2" x="175" dy="1.2em">SM-Nutzungsdauer</tspan>
+                            <rect id="box-konzept-x" class="box" x="100" y="100" width="250" height="50" />
+                            <text id="text-konzept-x" class="box-text" x="225" y="125">
+                                <tspan x="225" dy="-0.6em">Konzept X:</tspan>
+                                <tspan class="line2" x="225" dy="1.2em">SM-Nutzungsdauer</tspan>
                             </text>
 
                             <rect id="box-konzept-y" class="box" x="400" y="100" width="250" height="50" />
@@ -976,13 +1007,13 @@
                             </text>
                         </g>
 
-                        <!-- Level 3: Dimensionen (HIGHLIGHTED) -->
+                        {/* Level 3: Dimensionen (HIGHLIGHTED) */}
                         <g id="level-dimensionen">
-                            <rect id="box-dimension-x1" class="box dimension-box" x="50" y="200" width="250"
+                            <rect id="box-dimension-x1" class="box dimension-box" x="100" y="200" width="250"
                                 height="50" />
-                            <text id="text-dimension-x1" class="box-text dimension-text" x="175" y="225">
-                                <tspan x="175" dy="-0.6em">Dimension X1:</tspan>
-                                <tspan class="line2" x="175" dy="1.2em">Dauer (Std./Tag)</tspan>
+                            <text id="text-dimension-x1" class="box-text dimension-text" x="225" y="225">
+                                <tspan x="225" dy="-0.6em">Dimension X1:</tspan>
+                                <tspan class="line2" x="225" dy="1.2em">Dauer (Std./Tag)</tspan>
                             </text>
 
                             <rect id="box-dimension-y1" class="box dimension-box" x="400" y="200" width="250"
@@ -993,52 +1024,54 @@
                             </text>
                         </g>
 
-                        <!-- Focus Label -->
+                        {/* Focus Label */}
                         <g id="focus-indicator">
                             <text class="focus-label" x="350" y="265">Fokus diese Woche!</text>
-                            <line class="focus-arrow" x1="300" y1="255" x2="250" y2="235" />
-                            <line class="focus-arrow" x1="400" y1="255" x2="450" y2="235" />
+                            <line class="focus-arrow" x1="300" y1="255" x2="280" y2="238" />
+                            <line class="focus-arrow" x1="400" y1="255" x2="435" y2="235" />
                         </g>
 
-                        <!-- Level 4: Indikatoren (Preview) -->
+                        {/* Level 4: Indikatoren */}
                         <g id="level-indikatoren" class="preview">
-                            <rect id="box-indikator-x1" class="box preview-box" x="50" y="300" width="250"
+                            <rect id="box-indikator-x1" class="box preview-box" x="100" y="300" width="250"
                                 height="50" />
-                            <text id="text-indikator-x1" class="box-text preview-text" x="175" y="325">
-                                <tspan x="175" dy="-0.6em">Indikator X1a:</tspan>
-                                <tspan class="line2" x="175" dy="1.2em">Frage "Wie viele Std./Tag..."</tspan>
+                            <text id="text-indikator-x1" class="box-text preview-text" x="225" y="325">
+                                <tspan x="225" dy="-0.6em">Indikator X1a:</tspan>
+                                <tspan class="line2" x="225" dy="1.2em">Frage "Wie viele Std./Tag..."</tspan>
                             </text>
 
                             <rect id="box-indikator-y1" class="box preview-box" x="400" y="300" width="250"
                                 height="70" />
                             <text id="text-indikator-y1" class="box-text preview-text" x="525" y="335">
                                 <tspan x="525" dy="-1.2em">Indikatoren Y1a-e:</tspan>
-                                <tspan class="line2" x="525" dy="1.2em">SWLS Items 1-5</tspan>
-                                <tspan class="line2" x="525" dy="1.2em">("In most ways my life is close...")</tspan>
+                                <tspan class="line2" x="525" dy="1.2em">Mehrere Fragen/Items zur</tspan>
+                                <tspan class="line2" x="525" dy="1.2em">Messung der Lebenszufriedenheit</tspan>
                             </text>
                         </g>
 
-                        <!-- Level 5: Index (Preview) -->
+                        {/* Level 5: Index */}
                         <g id="level-index" class="preview">
                             <rect id="box-index-y" class="box preview-box" x="400" y="410" width="250" height="50" />
                             <text id="text-index-y" class="box-text preview-text" x="525" y="435">
                                 <tspan x="525" dy="-0.6em">Index Y:</tspan>
-                                <tspan class="line2" x="525" dy="1.2em">Mittelwert SWLS Items</tspan>
+                                <tspan class="line2" x="525" dy="1.2em">Mittelwert aus Items Y1a-e</tspan>
                             </text>
                         </g>
 
-                        <!-- Arrows -->
+                        {/* Arrows */}
                         <g id="arrows">
-                            <!-- Hypothese zu Konzepten -->
-                            <line class="arrow" x1="350" y1="60" x2="175" y2="100" />
+                            {/* Hypothese zu Konzepten */}
+                            <line class="arrow" x1="350" y1="60" x2="225" y2="100" />
                             <line class="arrow" x1="350" y1="60" x2="525" y2="100" />
-                            <!-- Konzepte zu Dimensionen -->
-                            <line class="arrow" x1="175" y1="150" x2="175" y2="200" />
+                             {/* Conceptual Link between X and Y */}
+                             <line class="arrow" x1="350" y1="125" x2="400" y2="125" />
+                            {/* Konzepte zu Dimensionen */}
+                            <line class="arrow" x1="225" y1="150" x2="225" y2="200" />
                             <line class="arrow" x1="525" y1="150" x2="525" y2="200" />
-                            <!-- Dimensionen zu Indikatoren -->
-                            <line class="arrow" x1="175" y1="250" x2="175" y2="300" />
+                            {/* Dimensionen zu Indikatoren */}
+                            <line class="arrow" x1="225" y1="250" x2="225" y2="300" />
                             <line class="arrow" x1="525" y1="250" x2="525" y2="300" />
-                            <!-- Indikatoren zu Index -->
+                            {/* Indikatoren zu Index */}
                             <line class="arrow" x1="525" y1="370" x2="525" y2="410" />
                         </g>
 
@@ -1058,7 +1091,8 @@
                             <strong>nicht</strong> "Wie frage ich das ab?" (Indikator).
                         </li>
                         <li><strong>Vage Definitionen vermeiden:</strong> Eine Definition wie "Glaubwürdigkeit ist, wie
-                            glaubwürdig etwas ist" hilft nicht. Nutzt Fachliteratur oder formuliert präzise, was
+                            glaubwürdig etwas ist" hilft nicht. <strong>Nutzt Fachliteratur & bestehende
+                                Messwerkzeuge</strong> oder formuliert präzise, was
                             <strong>ihr</strong> unter dem Begriff versteht. Beispiel: Vage: "Authentizität". Präziser:
                             "Authentizität eines Social-Media-Posts bezieht sich auf die Wahrnehmung des Rezipienten,
                             inwieweit der Post als echt, aufrichtig und nicht-manipulativ in seiner Darstellung
@@ -1080,7 +1114,7 @@
             </section>
 
             <section id="method-specifics" class="animated-on-scroll">
-                <h2>Konkreter Output für die Aufgabe 6 (pro Methode)</h2>
+                <h2>Konkreter Output für die Aufgabe 4 (pro Methode)</h2>
                 <ul>
                     <li><strong>Befragung:</strong> Dokumentiert und definiert alle Dimensionen, die ihr später im
                         Fragebogen erfassen wollt (sowohl für UVs/AVs als auch für Kontrollvariablen).</li>
@@ -1248,7 +1282,8 @@
                         <li><strong>Weitere Konzepte definieren:</strong> Definiert auch übergreifende Begriffe wie
                             <code>TikTok-Video</code> (Analyseeinheit) und ggf. weitere Kategorien, die ihr erheben
                             wollt (z.B. <code>Thema des Videos</code>, <code>Art der KI-Nutzung</code> -
-                            visuell/auditiv?).</li>
+                            visuell/auditiv?).
+                        </li>
                         <li><strong>Drittvariablen bedenken:</strong> Gibt es Aspekte wie das Veröffentlichungsdatum
                             (auch wenn ihr keinen Zeitvergleich mehr macht, könnte es zur Einordnung nützlich sein), die
                             Anzahl der Likes/Shares/Kommentare (als Maß für Relevanz/Rezeption), die ihr definieren und
